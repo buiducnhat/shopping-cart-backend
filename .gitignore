@@ -102,8 +102,4 @@ public/images/*
 .dynamodb/
 
 # TernJS port file
-<<<<<<< HEAD
 .tern-port
-=======
-.tern-port
->>>>>>> 6e2db731ea236d95620c1e699ea2e4b5f567dc84
