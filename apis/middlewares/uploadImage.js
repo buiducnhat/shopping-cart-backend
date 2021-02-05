@@ -1,7 +1,6 @@
 'use strict'
 
 const multer = require('multer')
-const path = require('path')
 
 const imageFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image')) {

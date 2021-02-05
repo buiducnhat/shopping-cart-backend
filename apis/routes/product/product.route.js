@@ -4,6 +4,7 @@ const express = require('express')
 const productRoute = express.Router()
 
 const uploadImage = require('../../middlewares/uploadImage')
+const uploadImageToImgur = require('../../middlewares/uploadImageToImgur')
 const verifyToken = require('../../middlewares/verifyToken')
 const checkPermission = require('../../middlewares/checkPermission')
 const productController = require('../../../controllers/product/product.controller')
@@ -13,12 +14,13 @@ productRoute.post('/',
     verifyToken,
     checkPermission,
     uploadImage.single('productImage'),
+    uploadImageToImgur,
     async (req, res, next) => {
         try {
             if (!req.file) {
                 return res.status(500).json({message: 'image file not found'})
             }
-            let productImage = req.file.path
+            let productImage = req.productImageUrl
             let {name, price, salePrice, description} = req.body
             const result = await productController.create(name, price, salePrice, productImage, description)
 
@@ -58,6 +60,24 @@ productRoute.get('/:productId', async (req, res, next) => {
             return res.status(404).json({message: `product with id ${productId} not found`})
         }
         return res.status(200).json(result)
+    } catch (error) {
+        if (error.status && error.message) {
+            return res.status(error.status).json({message: error.message})
+        }
+        return res.status(500).json(error)
+    }
+})
+
+// Api to get product by name (with sort, page)
+productRoute.get('/search', async (req, res, next) => {
+    try {
+        const name = req.query?.name,
+            pageNum = req.query?.page,
+            sortType = req.query?.sort
+
+        const itemPerPage = 8
+        const products = await productController.getByName(itemPerPage, pageNum, sortType, name)
+        return res.status(200).json(products)
     } catch (error) {
         if (error.status && error.message) {
             return res.status(error.status).json({message: error.message})
