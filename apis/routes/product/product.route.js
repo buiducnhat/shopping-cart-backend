@@ -3,7 +3,7 @@
 const express = require('express')
 const productRoute = express.Router()
 
-const uploadImage = require('../../middlewares/uploadImage')
+const uploadImageByMulter = require('../../middlewares/uploadImageByMulter')
 const uploadImageToImgur = require('../../middlewares/uploadImageToImgur')
 const verifyToken = require('../../middlewares/verifyToken')
 const checkPermission = require('../../middlewares/checkPermission')
@@ -13,19 +13,17 @@ const productController = require('../../../controllers/product/product.controll
 productRoute.post('/',
     verifyToken,
     checkPermission,
-    uploadImage.single('productImage'),
+    uploadImageByMulter.single('productImage'),
     uploadImageToImgur,
     async (req, res, next) => {
         try {
-            if (!req.file) {
-                return res.status(500).json({message: 'image file not found'})
-            }
             let productImage = req.productImageUrl
             let {name, price, salePrice, description} = req.body
             const result = await productController.create(name, price, salePrice, productImage, description)
 
             return res.status(200).json({message: 'create new product successfully', result})
         } catch (error) {
+            console.log(error)
             if (error.status && error.message) {
                 return res.status(error.status).json({message: error.message})
             }
@@ -90,7 +88,8 @@ productRoute.get('/search', async (req, res, next) => {
 productRoute.put('/:productId',
     verifyToken,
     checkPermission,
-    uploadImage.single('productImage'),
+    uploadImageByMulter.single('productImage'),
+    uploadImageToImgur,
     async (req, res, next) => {
         try {
             if (!req.file) {
