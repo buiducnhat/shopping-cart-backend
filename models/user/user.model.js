@@ -11,6 +11,9 @@ const UserModel = new mongoose.Schema({
         require: true,
         unique: true,
     },
+    avatar:{
+        type:String
+    },
     phoneNumber: {
         type: String,
         require: true,

@@ -67,12 +67,10 @@ userRoute.post('/login', async (req, res, next) => {
     }
 })
 
-userRoute.get('/:userId', verifyToken, async (req, res, next) => {
+userRoute.get('/', verifyToken, async (req, res, next) => {
     try {
-        const {userId} = req.params
-        if (userId !== req.userId) {
-            return res.status(403).json({message: 'unauthorized'})
-        }
+        const {userId} = req
+
         const userData = await userController.getInformation(userId)
         return res.status(200).json(userData)
     } catch (error) {

@@ -30,7 +30,8 @@ exports.signup = (name, email, phoneNumber, address, password) => {
                 return reject({message: 'invalid password'})
             }
             password = bcrypt.hashSync(password, 8)
-            const newUser = new UserModel({name, email, phoneNumber, address, password})
+            const avatar = `https://ui-avatars.com/api/?size=128&background=34495e&color=fff&name=${name.replace(/\s/g, '+')}`
+            const newUser = new UserModel({name, email, avatar, phoneNumber, address, password})
             const result = await newUser.save(newUser)
 
             return resolve(result)
@@ -74,7 +75,8 @@ exports.getInformation = (userId) => {
 exports.updateInfo = (userId, name, email, phoneNumber, address) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const result = await UserModel.findByIdAndUpdate(userId, {name, email, phoneNumber, address})
+            const avatar = `https://ui-avatars.com/api/?size=128&background=34495e&color=fff&name=${name.replace(/\s/g, '+')}`
+            const result = await UserModel.findByIdAndUpdate(userId, {name, email, avatar, phoneNumber, address})
             if (!result) {
                 return reject({status: 404, message: 'user not found'})
             }
