@@ -49,8 +49,21 @@ exports.cart = (userId, productId, quantity) => {
 exports.updateCart = (userId, items, total) => {
     return new Promise(async (resolve, reject) => {
         try {
-            await CartModel.findOneAndUpdate({userId}, {items, total})
+            const result = await CartModel.findOneAndUpdate({userId}, {items, total})
 
+            return resolve(result)
+        } catch (error) {
+            return reject(error)
+        }
+    })
+}
+
+exports.deleteCart = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result = await CartModel.findOneAndDelete({userId})
+
+            return resolve(result)
         } catch (error) {
             return reject(error)
         }

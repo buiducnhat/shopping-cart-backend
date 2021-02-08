@@ -37,6 +37,20 @@ cartRoute.put('/', verifyToken, async (req, res, next) => {
     }
 })
 
+cartRoute.delete('/', verifyToken, async (req, res, next) => {
+    try {
+        const userId = req.userId
+
+        const result = await cartController.deleteCart(userId)
+        return res.status(200).json(result)
+    } catch (error) {
+        if (error.status && error.message) {
+            return res.status(error.status).json({message: error.message})
+        }
+        return res.status(500).json(error)
+    }
+})
+
 cartRoute.get('/', verifyToken, async (req, res, next) => {
     try {
         const userId = req.userId
