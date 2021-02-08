@@ -18,7 +18,7 @@ exports.cart = (userId, productId, quantity) => {
                 let newCart = new CartModel({
                     userId,
                     items: [{productId, quantity}],
-                    total: productFounded.price * quantity
+                    total: productFounded.salePrice * quantity
                 })
                 newCart = await newCart.save()
 
@@ -36,7 +36,7 @@ exports.cart = (userId, productId, quantity) => {
                 if (!isExistedProduct) {
                     cartFounded.items.push({productId, quantity})
                 }
-                cartFounded.total += productFounded.price * quantity
+                cartFounded.total += productFounded.salePrice * quantity
                 await cartFounded.save()
                 return resolve(cartFounded)
             }
