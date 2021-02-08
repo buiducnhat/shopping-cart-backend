@@ -25,9 +25,9 @@ cartRoute.post('/', verifyToken, async (req, res, next) => {
 cartRoute.put('/', verifyToken, async (req, res, next) => {
     try {
         const userId = req.userId
-        const {items, total} = req.body
+        const {items} = req.body
 
-        const result = await cartController.updateCart(userId, items, total)
+        const result = await cartController.updateCart(userId, items)
         return res.status(200).json(result)
     } catch (error) {
         if (error.status && error.message) {

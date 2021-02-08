@@ -46,9 +46,13 @@ exports.cart = (userId, productId, quantity) => {
     })
 }
 
-exports.updateCart = (userId, items, total) => {
+exports.updateCart = (userId, items) => {
     return new Promise(async (resolve, reject) => {
         try {
+            let total = 0
+            for (let i = 0, length = items.length; i < length; i++) {
+                total += items[i].subTotal
+            }
             const result = await CartModel.findOneAndUpdate({userId}, {items, total})
 
             return resolve(result)
