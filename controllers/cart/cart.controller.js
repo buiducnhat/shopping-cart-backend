@@ -46,6 +46,17 @@ exports.cart = (userId, productId, quantity) => {
     })
 }
 
+exports.updateCart = (userId, items, total) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await CartModel.findOneAndUpdate({userId}, {items, total})
+
+        } catch (error) {
+            return reject(error)
+        }
+    })
+}
+
 exports.getCartInfo = (userId) => {
     return new Promise(async (resolve, reject) => {
         try {

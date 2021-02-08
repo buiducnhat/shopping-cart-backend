@@ -22,6 +22,21 @@ cartRoute.post('/', verifyToken, async (req, res, next) => {
     }
 })
 
+cartRoute.put('/', verifyToken, async (req, res, next) => {
+    try {
+        const userId = req.userId
+        const {items, total} = req.body
+
+        const result = await cartController.updateCart(userId, items, total)
+        return res.status(200).json(result)
+    } catch (error) {
+        if (error.status && error.message) {
+            return res.status(error.status).json({message: error.message})
+        }
+        return res.status(500).json(error)
+    }
+})
+
 cartRoute.get('/', verifyToken, async (req, res, next) => {
     try {
         const userId = req.userId
