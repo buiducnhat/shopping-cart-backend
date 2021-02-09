@@ -99,7 +99,7 @@ exports.getCartInfo = (userId) => {
                     productImage: product.productImage,
                     description: product.description,
                     quantity: item.quantity,
-                    subTotal: product.price * item.quantity
+                    subTotal: product.salePrice * item.quantity
                 })
             }
             return resolve(cartDetail)
