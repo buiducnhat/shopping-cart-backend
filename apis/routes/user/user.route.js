@@ -12,7 +12,7 @@ userRoute.post('/signup', async (req, res, next) => {
         let {name, email, phoneNumber, address, password} = req.body
         const isExistedUser = await userController.checkExistUser(email, phoneNumber)
         if (isExistedUser) {
-            return res.status(200).json({message: `email or phone number had already existed`})
+            return res.status(500).json({message: `email or phone number had already existed`})
         }
 
         const userData = await userController.signup(name, email, phoneNumber, address, password)

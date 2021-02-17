@@ -24,10 +24,10 @@ exports.signup = (name, email, phoneNumber, address, password) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!validator.isEmail(email)) {
-                return reject({message: 'invalid email'})
+                return reject({status: 500, message: 'invalid email'})
             }
             if (password.length < 8) {
-                return reject({message: 'invalid password'})
+                return reject({status: 500, message: 'invalid password'})
             }
             password = bcrypt.hashSync(password, 8)
             const avatar = `https://ui-avatars.com/api/?size=128&background=34495e&color=fff&name=${name.replace(/\s/g, '+')}`
