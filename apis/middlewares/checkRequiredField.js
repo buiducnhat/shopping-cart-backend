@@ -6,7 +6,7 @@ const checkBody = (requiredField) => (req, res, next) => {
         }
     })
     if (missingFields.length > 0) {
-        return res.status(500).json({message: `${missingFields.toString()} are required!!`})
+        return res.status(500).json({message: `${missingFields.join(', ')} are required!!`})
     }
     next()
 }
@@ -19,7 +19,7 @@ const checkQuery = (requiredField) => (req, res, next) => {
         }
     })
     if (missingFields.length > 0) {
-        return res.status(500).json({message: `${missingFields.toString()} are required!!`})
+        return res.status(500).json({message: `${missingFields.join(', ')} are required!!`})
     }
     next()
 }
