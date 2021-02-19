@@ -34,7 +34,7 @@ exports.getOrderOfUser = (userId) => {
                         productImage: product.productImage,
                         description: product.description,
                         quantity: item.quantity,
-                        subTotal: product.price * item.quantity
+                        subTotal: product.salePrice * item.quantity
                     })
                 }
                 ordersDetail.push(order)
