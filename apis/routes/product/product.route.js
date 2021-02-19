@@ -6,6 +6,7 @@ const productRoute = express.Router()
 const uploadImageByMulter = require('../../middlewares/uploadImageByMulter')
 const uploadImageToImgur = require('../../middlewares/uploadImageToImgur')
 const verifyToken = require('../../middlewares/verifyToken')
+const {checkBody} = require('../../middlewares/checkRequiredField')
 const checkPermission = require('../../middlewares/checkPermission')
 const productController = require('../../../controllers/product/product.controller')
 
@@ -15,6 +16,7 @@ productRoute.post('/',
     checkPermission,
     uploadImageByMulter.single('productImage'),
     uploadImageToImgur,
+    checkBody(['name', 'price']),
     async (req, res, next) => {
         try {
             let productImage = req.productImageUrl
@@ -90,6 +92,7 @@ productRoute.put('/:productId',
     checkPermission,
     uploadImageByMulter.single('productImage'),
     uploadImageToImgur,
+    checkBody(['name', 'price']),
     async (req, res, next) => {
         try {
             if (!req.file) {
