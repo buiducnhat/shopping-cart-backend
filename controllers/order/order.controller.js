@@ -11,38 +11,38 @@ exports.getOrderOfUser = (userId) => {
         try {
             const ordersFounded = await OrderModel.find({userId})
 
-            // let ordersDetail = []
+            let ordersDetail = []
 
-            // for (let i = 0, length = ordersFounded.length; i < length; ++i) {
-            //     let order = {
-            //         id: ordersFounded[i]._id,
-            //         name: ordersFounded[i].name,
-            //         phoneNumber: ordersFounded[i].phoneNumber,
-            //         address: ordersFounded[i].address,
-            //         status: ordersFounded[i].status,
-            //         items: [],
-            //         createdAt: ordersFounded[i].createdAt,
-            //         updatedAt: ordersFounded[i].updatedAt,
-            //         total: ordersFounded[i].total
-            //     }
-            //     for (let j = 0, length = ordersFounded[i].items.length; j < length; ++j) {
-            //         const item = ordersFounded[i].items[j]
-            //         const product = await ProductModel.findById(item.productId)
-            //         order.items.push({
-            //             productId: product._id,
-            //             name: product.name,
-            //             price: product.price,
-            //             salePrice: product.salePrice,
-            //             productImage: product.productImage,
-            //             description: product.description,
-            //             quantity: item.quantity,
-            //             subTotal: product.salePrice * item.quantity
-            //         })
-            //     }
-            //     ordersDetail.push(order)
-            // }
+            for (let i = 0, length = ordersFounded.length; i < length; ++i) {
+                let order = {
+                    id: ordersFounded[i]._id,
+                    name: ordersFounded[i].name,
+                    phoneNumber: ordersFounded[i].phoneNumber,
+                    address: ordersFounded[i].address,
+                    status: ordersFounded[i].status,
+                    items: [],
+                    createdAt: ordersFounded[i].createdAt,
+                    updatedAt: ordersFounded[i].updatedAt,
+                    total: ordersFounded[i].total
+                }
+                for (let j = 0, length = ordersFounded[i].items.length; j < length; ++j) {
+                    const item = ordersFounded[i].items[j]
+                    const product = await ProductModel.findById(item.productId)
+                    order.items.push({
+                        productId: product._id,
+                        name: product.name,
+                        price: product.price,
+                        salePrice: product.salePrice,
+                        productImage: product.productImage,
+                        description: product.description,
+                        quantity: item.quantity,
+                        subTotal: product.salePrice * item.quantity
+                    })
+                }
+                ordersDetail.push(order)
+            }
 
-            return resolve(ordersFounded)
+            return resolve(ordersDetail)
         } catch (error) {
             return reject(error)
         }
