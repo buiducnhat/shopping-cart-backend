@@ -21,6 +21,8 @@ exports.getOrderOfUser = (userId) => {
                     address: ordersFounded[i].address,
                     status: ordersFounded[i].status,
                     items: [],
+                    createdAt: ordersFounded[i].createdAt,
+                    updatedAt: ordersFounded[i].updatedAt,
                     total: ordersFounded[i].total
                 }
                 for (let j = 0, length = ordersFounded[i].items.length; j < length; ++j) {
