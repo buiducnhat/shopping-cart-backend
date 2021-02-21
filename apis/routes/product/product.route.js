@@ -16,7 +16,6 @@ productRoute.post('/',
     checkPermission,
     uploadImageByMulter.single('productImage'),
     uploadImageToImgur,
-    checkBody(['name', 'price']),
     async (req, res, next) => {
         try {
             let productImage = req.productImageUrl
