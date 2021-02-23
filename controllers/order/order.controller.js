@@ -42,7 +42,7 @@ exports.getOrderOfUser = (userId) => {
                 }
                 ordersDetail.push(order)
             }
-
+            console.log(ordersDetail)
             return resolve(ordersDetail)
         } catch (error) {
             return reject(error)

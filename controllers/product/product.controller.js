@@ -58,7 +58,6 @@ exports.getByName = (itemPerPage, pageNum, sortType, name) => {
 
             const allProducts = await ProductModel.find()
             const productsFounded = allProducts.filter(product => product.name.toLowerCase().includes(name))
-            console.log(productsFounded)
             productsFounded.sort((a, b) => {
                 switch (sortType) {
                     case sortConfig.sortTypeConfig.ASC_PRICE:
