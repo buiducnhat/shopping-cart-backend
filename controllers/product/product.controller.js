@@ -24,12 +24,13 @@ exports.getAll = (itemPerPage, pageNum, sortType) => {
             pageNum = parseInt(pageNum)
             sortType = sortType ? sortType : sortConfig.sortTypeConfig.DES_UPDATE
 
+            const itemCount = await ProductModel.count()
             const productsFounded = await ProductModel.find()
                 .sort(`${sortConfig.convert(sortType)}`)
                 .limit(itemPerPage)
                 .skip((pageNum - 1) * itemPerPage)
 
-            return resolve(productsFounded)
+            return resolve({total: itemCount, data: productsFounded})
         } catch (error) {
             return reject(error)
         }
