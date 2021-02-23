@@ -18,7 +18,7 @@ exports.cart = (userId, productId, quantity) => {
                 let newCart = new CartModel({
                     userId,
                     items: [{productId, quantity}],
-                    total: (productFounded.salePrice || productFounded.price) * quantity
+                    total: productFounded.currentPrice * quantity
                 })
                 newCart = await newCart.save()
 
@@ -36,7 +36,7 @@ exports.cart = (userId, productId, quantity) => {
                 if (!isExistedProduct) {
                     cartFounded.items.push({productId, quantity})
                 }
-                cartFounded.total += (productFounded.salePrice || productFounded.price) * quantity
+                cartFounded.total += productFounded.currentPrice * quantity
                 await cartFounded.save()
                 return resolve(cartFounded)
             }
@@ -94,12 +94,13 @@ exports.getCartInfo = (userId) => {
                 cartDetail.items.push({
                     productId: product._id,
                     name: product.name,
-                    price: product.price,
+                    orignalPrice: product.orignalPrice,
                     salePrice: product.salePrice,
+                    currentPrice: product.currentPrice,
                     productImage: product.productImage,
                     description: product.description,
                     quantity: item.quantity,
-                    subTotal: (product.salePrice || product.price) * item.quantity
+                    subTotal: product.currentPrice * item.quantity
                 })
             }
             return resolve(cartDetail)

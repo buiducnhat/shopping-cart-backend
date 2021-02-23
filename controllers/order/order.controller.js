@@ -31,12 +31,13 @@ exports.getOrderOfUser = (userId) => {
                     order.items.push({
                         productId: product._id,
                         name: product.name,
-                        price: product.price,
+                        orignalPrice: product.orignalPrice,
                         salePrice: product.salePrice,
+                        currentPrice: product.currentPrice,
                         productImage: product.productImage,
                         description: product.description,
                         quantity: item.quantity,
-                        subTotal: (product.salePrice || product.price) * item.quantity
+                        subTotal: product.currentPrice * item.quantity
                     })
                 }
                 ordersDetail.push(order)

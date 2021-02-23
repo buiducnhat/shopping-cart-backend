@@ -4,10 +4,11 @@ const db = require('../../models')
 const ProductModel = db.products
 const sortConfig = require('./sortConfig')
 
-exports.create = (name, price, salePrice, productImage, description) => {
+exports.create = (name, orignalPrice, salePrice, productImage, description) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let newProduct = new ProductModel({name, price, salePrice, productImage, description})
+            const currentPrice = salePrice || orignalPrice
+            let newProduct = new ProductModel({name, orignalPrice, salePrice, currentPrice, productImage, description})
             const result = await newProduct.save(newProduct)
             return resolve(result)
         } catch (error) {
@@ -53,16 +54,16 @@ exports.getByName = (itemPerPage, pageNum, sortType, name) => {
             pageNum = parseInt(pageNum)
             sortType = sortType ? sortType : sortConfig.sortTypeConfig.DES_UPDATE
             name = name.toLowerCase()
-            console.log(name)
+
             const allProducts = await ProductModel.find()
             const productsFounded = allProducts.filter(product => product.name.toLowerCase().includes(name))
             console.log(productsFounded)
             productsFounded.sort((a, b) => {
                 switch (sortType) {
                     case sortConfig.sortTypeConfig.ASC_PRICE:
-                        return b.price - a.price
+                        return b.currentPrice - a.currentPrice
                     case sortConfig.sortTypeConfig.DES_PRICE:
-                        return a.price - b.price
+                        return a.currentPrice - b.currentPrice
                     case sortConfig.sortTypeConfig.ASC_UPDATE:
                         return Date.parse(b.updatedAt) - Date.parse(a.updatedAt)
                     case sortConfig.sortTypeConfig.DES_PRICE:
@@ -78,10 +79,11 @@ exports.getByName = (itemPerPage, pageNum, sortType, name) => {
     })
 }
 
-exports.updateById = (productId, name, price, salePrice, productImage, description) => {
+exports.updateById = (productId, name, orignalPrice, salePrice, productImage, description) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const result = await ProductModel.findByIdAndUpdate(productId, {name, price, salePrice, productImage, description})
+            const currentPrice = salePrice || orignalPrice
+            const result = await ProductModel.findByIdAndUpdate(productId, {name, orignalPrice, salePrice, currentPrice, productImage, description})
             return resolve(result)
         } catch (error) {
             return reject(error)

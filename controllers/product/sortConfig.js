@@ -10,9 +10,9 @@ const sortTypeConfig = {
 const convert = (sortType) => {
     switch (sortType) {
         case sortTypeConfig.ASC_PRICE:
-            return 'price'
+            return 'currentPrice'
         case sortTypeConfig.DES_PRICE:
-            return '-price'
+            return '-currentPrice'
         case sortTypeConfig.ASC_UPDATE:
             return 'updatedAt'
         case sortTypeConfig.DES_UPDATE:

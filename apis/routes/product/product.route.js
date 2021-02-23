@@ -19,8 +19,8 @@ productRoute.post('/',
     async (req, res, next) => {
         try {
             let productImage = req.productImageUrl
-            let {name, price, salePrice, description} = req.body
-            const result = await productController.create(name, price, salePrice, productImage, description)
+            let {name, orignalPrice, salePrice, description} = req.body
+            const result = await productController.create(name, orignalPrice, salePrice, productImage, description)
 
             return res.status(200).json({message: 'create new product successfully', result})
         } catch (error) {
@@ -91,7 +91,7 @@ productRoute.put('/:productId',
     checkPermission,
     uploadImageByMulter.single('productImage'),
     uploadImageToImgur,
-    checkBody(['name', 'price']),
+    checkBody(['name', 'orignalPrice']),
     async (req, res, next) => {
         try {
             if (!req.file) {
@@ -99,8 +99,8 @@ productRoute.put('/:productId',
             }
             const {productId} = req.params
             const productImage = req.file.path
-            const {name, price, salePrice, description} = req.body
-            const result = await productController.updateById(productId, name, price, salePrice, productImage, description)
+            const {name, orignalPrice, salePrice, description} = req.body
+            const result = await productController.updateById(productId, name, orignalPrice, salePrice, productImage, description)
 
             return res.status(200).json({message: 'update product successfully', result})
         } catch (error) {
