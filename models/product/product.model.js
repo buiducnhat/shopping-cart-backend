@@ -5,25 +5,35 @@ const mongoose = require('mongoose')
 const ProductSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
     orignalPrice: {
         type: Number,
-        require: true
+        required: true
     },
     salePrice: {
         type: Number,
     },
     currentPrice: {
         type: Number,
-        require: true
+        required: true
     },
     description: {
         type: String
     },
     productImage: {
         type: String,
-        require: true
+        required: true
+    },
+    quantity:{
+        type: Number,
+        required: true,
+        default: 99
+    },
+    categoryId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required: true
     }
 }, {
     timestamps: true
