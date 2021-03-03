@@ -10,7 +10,7 @@ const ItemSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
-        require: true,
+        required: true,
         min: [1, 'quantity cannot be less than 1']
     }
 }, {
@@ -21,24 +21,24 @@ const OrderSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        require: true
+        required: true
     },
     name: {
         type: String,
-        require: true
+        required: true
     },
     phoneNumber: {
         type: String,
-        require: true
+        required: true
     },
     address: {
         type: String,
-        require: true
+        required: true
     },
     items: [ItemSchema],
     status: {
         type: OrderStatus,
-        require: true,
+        required: true,
         default: OrderStatus.active
     },
     total: {

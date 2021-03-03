@@ -8,7 +8,7 @@ const UserModel = new mongoose.Schema({
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true,
     },
     avatar:{
@@ -16,16 +16,16 @@ const UserModel = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
     address: {
         type: String,
-        require: true
+        required: true
     },
     password: {
         type: String,
-        require: true,
+        required: true,
     },
     role: {
         type: String,
