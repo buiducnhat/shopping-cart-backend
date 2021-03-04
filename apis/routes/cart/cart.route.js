@@ -25,6 +25,7 @@ cartRoute.post('/', verifyToken,
         }
     })
 
+// Api to update cart
 cartRoute.put('/', verifyToken,
     checkBody(['items']),
     async (req, res, next) => {
@@ -42,6 +43,7 @@ cartRoute.put('/', verifyToken,
         }
     })
 
+// Api to remove a cart
 cartRoute.delete('/', verifyToken, async (req, res, next) => {
     try {
         const userId = req.userId
@@ -56,6 +58,7 @@ cartRoute.delete('/', verifyToken, async (req, res, next) => {
     }
 })
 
+// Api to get data of a cart of an user
 cartRoute.get('/', verifyToken, async (req, res, next) => {
     try {
         const userId = req.userId

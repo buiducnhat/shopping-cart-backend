@@ -18,10 +18,12 @@ const productRoute = require('./apis/routes/product/product.route')
 const userRoute = require('./apis/routes/user/user.route')
 const cartRoute = require('./apis/routes/cart/cart.route')
 const orderRoute = require('./apis/routes/order/order.route')
+const categoryRoute = require('./apis/routes/category/category.route')
 app.use('/products', productRoute)
 app.use('/users', userRoute)
 app.use('/carts', cartRoute)
 app.use('/orders', orderRoute)
+app.use('/categories', categoryRoute)
 
 const db = require('./models')
 db.mongoose

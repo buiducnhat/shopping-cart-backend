@@ -25,12 +25,12 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    quantity:{
+    quantity: {
         type: Number,
         required: true,
         default: 99
     },
-    categoryId:{
+    categoryId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
         required: true

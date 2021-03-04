@@ -8,6 +8,7 @@ const userController = require('../../../controllers/user/user.controller')
 const verifyToken = require('../../middlewares/verifyToken')
 const {checkBody} = require('../../middlewares/checkRequiredField')
 
+// Api to sign up
 userRoute.post('/signup',
     checkBody(['name', 'email', 'phoneNumber', 'address', 'password']),
     async (req, res, next) => {
@@ -42,6 +43,7 @@ userRoute.post('/signup',
         }
     })
 
+// Api to login
 userRoute.post('/login',
     checkBody(['email', 'password']),
     async (req, res, next) => {
@@ -72,6 +74,7 @@ userRoute.post('/login',
         }
     })
 
+// Api to get user data
 userRoute.get('/', verifyToken, async (req, res, next) => {
     try {
         const {userId} = req
@@ -86,6 +89,7 @@ userRoute.get('/', verifyToken, async (req, res, next) => {
     }
 })
 
+// Api to update user info
 userRoute.put('/:userId', verifyToken, async (req, res, next) => {
     try {
         const {userId} = req.params
@@ -103,6 +107,7 @@ userRoute.put('/:userId', verifyToken, async (req, res, next) => {
     }
 })
 
+// Api to delete account
 userRoute.delete('/:userId', verifyToken, async (req, res, next) => {
     try {
         const {userId} = req.params

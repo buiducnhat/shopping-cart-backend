@@ -9,7 +9,6 @@ const verifyToken = require('../../middlewares/verifyToken')
 const {checkBody} = require('../../middlewares/checkRequiredField')
 const checkPermission = require('../../middlewares/checkPermission')
 const productController = require('../../../controllers/product/product.controller')
-
 // Api to create new product (require Admin perrmission)
 productRoute.post('/',
     verifyToken,
@@ -35,11 +34,29 @@ productRoute.post('/',
 // Api to get all products (with sort, page)
 productRoute.get('/', async (req, res, next) => {
     try {
-        let pageNum = req.query?.page,
-            sortType = req.query?.sort
+        const pageNum = req.query?.page,
+            sortType = req.query?.sort,
+            itemPerPage = req.query?.size || 8
 
-        const itemPerPage = 8
         const products = await productController.getAll(itemPerPage, pageNum, sortType)
+        return res.status(200).json(products)
+    } catch (error) {
+        if (error.status && error.message) {
+            return res.status(error.status).json({message: error.message})
+        }
+        return res.status(500).json(error)
+    }
+})
+
+// Api to get all products with category ID (with sort, page)
+productRoute.get('/category/:categoryName', async (req, res, next) => {
+    try {
+        const {categoryName} = req.params
+        const pageNum = req.query?.page,
+            sortType = req.query?.sort,
+            itemPerPage = req.query?.size || 8
+
+        const products = await productController.getByCategory(itemPerPage, pageNum, sortType, categoryName)
         return res.status(200).json(products)
     } catch (error) {
         if (error.status && error.message) {
